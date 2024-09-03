@@ -10,8 +10,8 @@ export default function Layout({ children }) {
       </header>
 
       {/* Main content with fixed height and scrollable content */}
-      <div className="flex-grow flex justify-center items-center ">
-        <div className="min:h-[400px] min:md:h-[400px] min:lg:h-[450px] max-w-lg w-full bg-white rounded-lg overflow-y-auto shadow-xl">
+      <div className="flex-grow flex justify-center items-center border border-black ">
+        <div className="h-[400px] md:h-[400px] lg:h-[450px] max-w-lg w-full bg-white rounded-lg overflow-y-auto shadow-xl pb-[20px]">
           {children}
         </div>
       </div>

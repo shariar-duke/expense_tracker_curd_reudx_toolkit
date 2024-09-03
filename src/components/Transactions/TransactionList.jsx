@@ -5,6 +5,9 @@ export default function TransactionList() {
       <p className="text-[18px] font-medium">Your Transition</p>
       <Transaction/>
       <Transaction/>
+      <Transaction/>
+      <Transaction/>
+      <Transaction/>
     </div>
   );
 }
