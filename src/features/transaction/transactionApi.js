@@ -15,3 +15,11 @@ export const addTransaction = async(data)=>
     const response = await axios.post("/transactions",data)
     return response.data
 }
+
+// This funtion is for editing the transation 
+
+export const editTransaction = async(id, data)=> 
+{
+    const response = await axios.put(`/transactions/${id}`, data)
+    return response.data
+}
