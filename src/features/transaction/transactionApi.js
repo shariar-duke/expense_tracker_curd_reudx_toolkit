@@ -23,3 +23,10 @@ export const editTransaction = async(id, data)=>
     const response = await axios.put(`/transactions/${id}`, data)
     return response.data
 }
+
+// this function will delete a transacation 
+
+export const deleteTransacaton = async(id)=> {
+ const response = await axios.delete(`/transactions/${id}`)
+ return response.data
+}
