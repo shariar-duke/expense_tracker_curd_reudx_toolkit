@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createTransaction } from "../features/transaction/transactionSlice";
+import { changeTransaction, createTransaction, editInactive } from "../features/transaction/transactionSlice";
 export default function Form() {
   const [data, setData] = useState({
     name: "",
@@ -59,10 +59,18 @@ export default function Form() {
     setSubmissionAttempted(true);
   };
 
-  const handleEdit = (e) => {};
+  const handleUpdate = (e) => {
+    e.preventDefault()
+    dispatch(changeTransaction({id:editing?.id, data}))
+    setData({
+        name: "",
+        amount: "",
+        type: "",
+      });
+  };
   return (
     <form
-      onSubmit={handleCreate}
+      onSubmit={editMode? handleUpdate: handleCreate}
       className="px-6 py-4 bg-white rounded-lg  space-y-4"
     >
       <p className="text-lg font-semibold">Add New Transaction</p>
@@ -147,12 +155,17 @@ export default function Form() {
         type="submit"
         className="w-full mt-4 bg-teal-600 text-white py-2 px-4 rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50"
       >
-        Add Transaction
+        {editMode ? "Edit Transaction" : " Add Transaction"} 
       </button>
 
       {editMode && (
         <button
-          onClick={() => setEditMode(false)}
+          onClick={() => 
+          {  setEditMode(false),
+            dispatch(editInactive())
+          }  
+          }
+          
           className="w-full mt-4 bg-red-400 text-white py-2 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50"
         >
           Cancel Edit
