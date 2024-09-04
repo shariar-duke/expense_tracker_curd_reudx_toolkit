@@ -1,14 +1,19 @@
 /* eslint-disable react/prop-types */
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
-import { editActive } from "../../features/transaction/transactionSlice";
+import { editActive, removeTransaction } from "../../features/transaction/transactionSlice";
 export default function Transaction({transactionData}) {
     const dispatch = useDispatch()
-    const {name, amount , type } = transactionData
+    const { id ,name, amount , type } = transactionData
 
     const handleEditSelect=()=> 
     {
        dispatch(editActive(transactionData))
+    }
+
+    const handleDeleteTransaction =()=> 
+    {
+       dispatch(removeTransaction(id))
     }
     
   return (
@@ -18,7 +23,7 @@ export default function Transaction({transactionData}) {
         <FaBangladeshiTakaSign size={16} color="white" />
         <p className="text-[16px] font-medium text-white ml-[-4px]">{amount} </p>
         <img onClick={handleEditSelect} src="/edit.svg" height={16} width={16} alt="edit" className="cursor-pointer" />
-        <img src="/delete.svg" height={16} width={16} alt="delete" className="cursor-pointer"/>
+        <img onClick={handleDeleteTransaction} src="/delete.svg" height={16} width={16} alt="delete" className="cursor-pointer"/>
       </div>
     </div>
   );
