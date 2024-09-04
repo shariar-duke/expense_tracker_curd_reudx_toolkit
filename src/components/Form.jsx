@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createTransaction } from "../features/transaction/transactionSlice";
 export default function Form() {
@@ -7,37 +7,59 @@ export default function Form() {
     amount: "",
     type: "",
   });
-  const [submissionAttempted, setSubmissionAttempted] = useState(false); // eta form er niche red line er jnno . jno sudhu form submiison er somoy error aslei ota dekhay baki time na. 
+  const [submissionAttempted, setSubmissionAttempted] = useState(false);
   const dispatch = useDispatch();
   const { name, amount, type } = data;
-  // we need to check if the form submission is fullfiled , pending or error occured
-  const { isLoading, isError } = useSelector(
-    (state) => state.transaction
-  );
+  const [editMode, setEditMode] = useState(false);
+  const { isLoading, isError } = useSelector((state) => state.transaction);
+
+  // object take anar try korbo
+  const { editing } = useSelector((state) => state.transaction) || {};
+  console.log("The editing objec is", editing);
+
+  // listen for editMode active
+  useEffect(() => {
+    const { id, name, amount, type } = editing || {};
+    if (id) {
+      setEditMode(true);
+      setData({
+        name: name || "", // Set name
+        amount: amount || "", // Set amount
+        type: type || "", // Set type
+      });
+    } else {
+      setEditMode(false);
+      setData({
+        name: "",
+        amount: "",
+        type: "",
+      });
+    }
+  }, [editing]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData({
       ...data,
-      [name]: name === "amount"? Number(value) : value
+      [name]: name === "amount" ? Number(value) : value,
     });
   };
 
   const handleCreate = (e) => {
     e.preventDefault();
     dispatch(createTransaction(data));
-    if(!isError) 
-    {
-         // Reset form fields only if there is no error
+    if (!isError) {
       setData({
         name: "",
         amount: "",
         type: "",
-      })
+      });
     }
 
-    setSubmissionAttempted(true)
+    setSubmissionAttempted(true);
   };
 
+  const handleEdit = (e) => {};
   return (
     <form
       onSubmit={handleCreate}
@@ -127,9 +149,20 @@ export default function Form() {
       >
         Add Transaction
       </button>
+
+      {editMode && (
+        <button
+          onClick={() => setEditMode(false)}
+          className="w-full mt-4 bg-red-400 text-white py-2 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50"
+        >
+          Cancel Edit
+        </button>
+      )}
       {submissionAttempted && !isLoading && isError && (
         <div className="text-center">
-          <p className="text-[18px] text-red-600 text-bold">There was an error occured</p>
+          <p className="text-[18px] text-red-600 text-bold">
+            There was an error occured
+          </p>
         </div>
       )}
     </form>
