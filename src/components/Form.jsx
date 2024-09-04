@@ -7,6 +7,7 @@ export default function Form() {
     amount: "",
     type: "",
   });
+  const [submissionAttempted, setSubmissionAttempted] = useState(false); // eta form er niche red line er jnno . jno sudhu form submiison er somoy error aslei ota dekhay baki time na. 
   const dispatch = useDispatch();
   const { name, amount, type } = data;
   // we need to check if the form submission is fullfiled , pending or error occured
@@ -33,6 +34,8 @@ export default function Form() {
         type: "",
       })
     }
+
+    setSubmissionAttempted(true)
   };
 
   return (
@@ -124,7 +127,7 @@ export default function Form() {
       >
         Add Transaction
       </button>
-      {!isLoading && isError && (
+      {submissionAttempted && !isLoading && isError && (
         <div className="text-center">
           <p className="text-[18px] text-red-600 text-bold">There was an error occured</p>
         </div>
