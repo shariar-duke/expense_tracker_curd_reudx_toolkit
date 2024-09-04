@@ -1,5 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addTransaction, deleteTransacaton, editTransaction, getTransactions } from "./transactionApi";
+import {
+    addTransaction,
+    deleteTransacaton,
+    editTransaction,
+    getTransactions,
+} from "./transactionApi";
 const intialState = {
   transactions: [],
   isLoading: false,
@@ -24,38 +29,73 @@ export const createTransaction = createAsyncThunk(
 );
 
 export const changeTransaction = createAsyncThunk(
-    "transaction/changeTransaction",
-    async ({id, data}) => {
-      const transaction = await editTransaction({id,data});
-      return transaction;
-    }
-  );
+  "transaction/changeTransaction",
+  async ({ id, data }) => {
+    const transaction = await editTransaction({ id, data });
+    return transaction;
+  }
+);
 
-export const removeTransaction = createAsyncThunk("transaction/removeTransaction", async(id)=> {
-    const transacation = await deleteTransacaton(id)
-    return transacation
-})
-  
-// now create the slice 
+export const removeTransaction = createAsyncThunk(
+  "transaction/removeTransaction",
+  async (id) => {
+    const transacation = await deleteTransacaton(id);
+    return transacation;
+  }
+);
+
+// now create the slice
 const transactionSlice = createSlice({
-    name:"transaction",
-    initialState:intialState,
-    extraReducers:(builder)=> {
-        builder.addCase(fetchTransactions.pending ,(state)=> {
-            state.isError = false;
-            state.isLoading = true;
-        }).addCase(fetchTransactions.fulfilled, (state,action)=> 
-        {
-            state.isError = false;
-            state.isLoading = false;
-            state.transactions = action.payload
-        }).addCase(fetchTransactions.rejected,(state,action)=> 
-        {
-            state.isError = true;
-            state.isLoading= false;
-            state.error = action.error?.message;
-            state.transactions = []
+  name: "transaction",
+  initialState: intialState,
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchTransactions.pending, (state) => {
+        state.isError = false;
+        state.isLoading = true;
+      })
+      .addCase(fetchTransactions.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.transactions = action.payload;
+      })
+      .addCase(fetchTransactions.rejected, (state, action) => {
+        state.isError = true;
+        state.isLoading = false;
+        state.error = action.error?.message;
+        state.transactions = [];
+      })
+      .addCase(createTransaction.pending, (state) => {
+        state.isError = false;
+        state.isLoading = true;
+      })
+      .addCase(createTransaction.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.transactions.push(action.payload);
+      })
+      .addCase(createTransaction.rejected, (state, action) => {
+        state.isError = true;
+        state.isLoading = false;
+        state.error = action.error?.message;
+      })
+      .addCase(changeTransaction.pending, (state) => {
+        state.isError = false;
+        state.isLoading = true;
+      })
+      .addCase(changeTransaction.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
 
-        })
-    }
-})
+        const indexToUpdate = state.transactions.findIndex(
+          (t) => t.id == action.payload.id
+        );
+        state.transactions[indexToUpdate] = action.payload;
+      })
+      .addCase(changeTransaction.rejected, (state, action) => {
+        state.isError = true;
+        state.isLoading = false;
+        state.error = action.error?.message;
+      });
+  },
+});
