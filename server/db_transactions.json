@@ -1,34 +1,10 @@
 {
   "transactions": [
     {
-      "name": "Salary from  Ms",
-      "amount": 1000000,
+      "name": "A",
+      "amount": 450,
       "type": "income",
       "id": 1
-    },
-    {
-      "name": "Family Expenses",
-      "amount": 200,
-      "type": "expense",
-      "id": 2
-    },
-    {
-      "name": "Upore Income ",
-      "amount": 50000000,
-      "type": "income",
-      "id": 3
-    },
-    {
-      "name": "Mother",
-      "amount": "6",
-      "type": "income",
-      "id": 4
-    },
-    {
-      "name": "Father",
-      "amount": 4000,
-      "type": "income",
-      "id": 5
     }
   ]
 }
