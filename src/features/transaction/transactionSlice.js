@@ -96,6 +96,19 @@ const transactionSlice = createSlice({
         state.isError = true;
         state.isLoading = false;
         state.error = action.error?.message;
+      }).addCase(removeTransaction.pending, (state) => {
+        state.isError = false;
+        state.isLoading = true;
+      })
+      .addCase(removeTransaction.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.transactions = state.transactions.filter((t)=> t.id != action.payload.id)
+      })
+      .addCase(removeTransaction.rejected, (state, action) => {
+        state.isError = true;
+        state.isLoading = false;
+        state.error = action.error?.message;
       });
   },
 });
