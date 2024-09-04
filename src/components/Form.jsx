@@ -15,7 +15,7 @@ export default function Form() {
 
   // object take anar try korbo
   const { editing } = useSelector((state) => state.transaction) || {};
-  console.log("The editing objec is", editing);
+
 
   // listen for editMode active
   useEffect(() => {
