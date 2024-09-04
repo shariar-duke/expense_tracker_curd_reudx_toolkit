@@ -7,15 +7,15 @@
       "id": 1
     },
     {
-      "id": 2,
       "name": "Family Expenses",
+      "amount": 200,
       "type": "expense",
-      "amount": 200000
+      "id": 2
     },
     {
-      "name": "Medeicine",
-      "amount": "500",
-      "type": "expense",
+      "name": "Upore Income ",
+      "amount": 50000000,
+      "type": "income",
       "id": 3
     },
     {

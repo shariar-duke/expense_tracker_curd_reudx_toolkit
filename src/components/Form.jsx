@@ -62,6 +62,7 @@ export default function Form() {
   const handleUpdate = (e) => {
     e.preventDefault()
     dispatch(changeTransaction({ id: editing?.id, data }));
+    setEditMode(false)
 
     setData({
         name: "",
