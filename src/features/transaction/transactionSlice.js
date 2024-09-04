@@ -33,7 +33,7 @@ export const createTransaction = createAsyncThunk(
 export const changeTransaction = createAsyncThunk(
   "transaction/changeTransaction",
   async ({ id, data }) => {
-    const transaction = await editTransaction({ id, data });
+    const transaction = await editTransaction( id, data );
     return transaction;
   }
 );

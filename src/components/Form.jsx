@@ -61,7 +61,8 @@ export default function Form() {
 
   const handleUpdate = (e) => {
     e.preventDefault()
-    dispatch(changeTransaction({id:editing?.id, data}))
+    dispatch(changeTransaction({ id: editing?.id, data }));
+
     setData({
         name: "",
         amount: "",
